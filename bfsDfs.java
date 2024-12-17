@@ -84,6 +84,22 @@ public class bfsDfs {
         }
     }
 
+    public static void printAllPath(ArrayList<Edge> graph[],boolean visited[], int target,String path, int curr){
+        if(curr==target){
+            System.out.print(path);
+            return;
+        }
+
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edge e = graph[curr].get(i);
+            if(visited[e.dst]==false){
+                visited[curr]=true;
+                printAllPath(graph, visited, target, path+e.dst, e.dst);
+                visited[curr]=false;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int v = 11; // Number of vertices in the graph
         ArrayList<Edge> graph[] = new ArrayList[v]; // Create an array of ArrayLists to store edges
@@ -112,5 +128,12 @@ public class bfsDfs {
                 Dfs(graph, visited, j); // Perform DFS starting from the node
             }
         }
+        System.out.println();
+        Arrays.fill(visited, false);
+        System.out.print("Path: ");
+        int src=0, target=5;
+        
+        printAllPath(graph, visited, target, "0", src);
+
     }
 }
